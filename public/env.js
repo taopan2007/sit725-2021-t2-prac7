@@ -1,27 +1,33 @@
-const testButtonFunction=()=>{
-  alert('Thank you for clicking')
-}
-
 // connect to the socket
-
 let socket = io();
-
 
 socket.on('number', (msg) => {
     console.log('Random number: ' + msg);
 })
 
-console.log('test')
+// main
 $(document).ready(function(){
   console.log('Ready')
-  
-  //bind the button
-  $('#testButton').click(testButtonFunction)
 
-  //test get call
-  $.get('/test?user_name="Fantastic User"',(result)=>{
-    console.log(result)
+  $.get('/init', (result) => {
+    $('#hero-area').append(createHero(result.heroContent))
+    $('#intro-area').append(createIntro(result.introContent))
+    for (let item of result.frameSlideContent) {
+      $('#frameslide-area').append(createFrameCard(item))
+    }
+    $('#tabs-area').append(createTabs(result.tabsContent, result.buttons))
+    createTabContent(result.tabsContent)
+    //$('#carousel-area').append(createCarouselContent(result.carouselContent))
+    createSlideContent(result.slideContent)
+    createAmenitiesContent(result.amenitiesContent)
   })
 
-
+  $('#nav-bar').load('components/navbar.html', () => {
+    //$('.sidenav').sidenav()
+    $('.tabs').tabs()
+    //$('.carousel').carousel();
+    $('.slider').slider();
+    $('.scrollspy').scrollSpy();
+  })
+  
 })

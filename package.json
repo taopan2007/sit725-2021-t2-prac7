@@ -1,20 +1,23 @@
 {
-  "name": "bluemix-hello-node",
-  "version": "0.0.0",
+  "name": "Tao Pan Task",
+  "version": "0.0.1",
   "dependencies": {
     "cf-deployment-tracker-client": "*",
     "commander": "^2.6.0",
     "express": "^4.14.1",
     "http-post": "^0.1.1",
-    "http-proxy": "^1.8.1",
+    "http-proxy": "^1.18.1",
     "socket.io": "^2.3.0"
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "set PORT=3030 && nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IBM-Bluemix/bluemix-hello-node.git"
+    "url": "https://github.com/taopan2007/sit725-2021-t2-prac3.git"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
