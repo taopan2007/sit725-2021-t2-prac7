@@ -36,17 +36,18 @@ const createFrameCard = res => {
 }
 
 const createTabs = (res, res2) => {
+    //<a class="active" href="#${res[0].tabID}">${res[0].title.toUpperCase()}</a>
     return `
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s4">
-                    <a class="active" href="#${res[0].tabID}">${res[0].title.toUpperCase()}</a>
+                    <a ${res[0].active && `class="active"`} href="#${res[0].tabID}">${res[0].title.toUpperCase()}</a>
                 </li>
                 <li class="tab col s4">
-                    <a href="#${res[1].tabID}">${res[1].title.toUpperCase()}</a>
+                    <a ${res[1].active && `class="active"`} href="#${res[1].tabID}">${res[1].title.toUpperCase()}</a>
                 </li>
                 <li class="tab col s4">
-                    <a href="#${res[2].tabID}">${res[2].title.toUpperCase()}</a>
+                    <a ${res[2].active && `class="active"`} href="#${res[2].tabID}">${res[2].title.toUpperCase()}</a>
                 </li>            
             </ul>
         </div>
@@ -58,6 +59,7 @@ const createTabs = (res, res2) => {
 }
 
 const createTabContent = res => {
+    //console.log(res)
     const tabDisplaying = res.map((item) => {
         return item.cards.map((card) => {
             return `
@@ -80,16 +82,9 @@ const createTabContent = res => {
     })    
 }
 
-const createCarouselContent = res => {
-    for (let item of res) {
-        $('#carousel-area').append(`
-            <a class="carousel-item" href="${item.href}">
-                <img src="${item.img || 'assets/p1.jpg'}">
-            </a>`)
-    }
-}
-
 const createSlideContent = res => {
+    //console.log('---> slide ssss')
+    //console.log(res)
     for (let item of res) {
         $('.slides').append(`
             <li>
@@ -118,4 +113,95 @@ const createAmenitiesContent = res => {
                 </div>
             </div>`)
     }
+}
+
+//booking 
+
+const createBookingModal = (res) => {
+    $('#bookModal').append(`
+        <div class="modal-content">
+        <h4>${res.header}</h4>
+        <div class='row'>
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" class="validate">
+                    <label for="first_name">${res.input_box.first_name}</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">${res.input_box.last_name}</label>
+                </div>
+            </div>      
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="phone" type="tel" class="validate">
+                    <label for="phone">${res.input_box.phone}</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">${res.input_box.email}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select id="room_options" class="icons">
+                        <option value="" disabled selected>${res.input_box.choose}:</option>
+                        </select>
+                    <label>Images in select</label>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a id="book_cancel" href="#!" class="modal-close waves-effect red waves-red btn">
+            ${res.btns.cancel}
+        </a>
+        <a id="book_ok" href="#!" class="modal-close waves-effect waves-green btn">
+            ${res.btns.ok}
+        </a>
+    </div>`)
+    
+    for (let i of res.options) {
+        $('#room_options').append(`
+            <option value="${i.id}" data-icon="${i.img_url}">${i.option_id}</option>`)
+    }
+
+    const clearInput = () => {
+        $('#first_name').val('')
+        $('#last_name').val('')
+        $('#phone').val('')
+        $('#email').val('')
+        $('#room_options').val('')
+        //$('#room_options').prop('selectedIndex', 0)
+    }
+
+    $('#book_cancel').click(() => {
+        clearInput()
+    })
+    
+    $('#book_ok').click(() => {
+        const data = {
+            firstName: $('#first_name').val(),
+            lastName: $('#last_name').val(),
+            email: $('#email').val(),
+            option: $('#room_options option:selected').val()
+            //option: $('#room_options').formSelect('getSelectedValues')
+        }
+
+        const setting = {
+            "url": "/bookReq",
+            "type": "POST",
+            "timeout": 500,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify(data)
+        }
+
+        $.ajax(setting).done((res) => {console.log(res)})
+        //$.post('/bookReq', JSON.stringify(data))
+        clearInput()
+    })
 }

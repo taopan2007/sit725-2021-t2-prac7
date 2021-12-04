@@ -7,11 +7,12 @@
     "express": "^4.14.1",
     "http-post": "^0.1.1",
     "http-proxy": "^1.18.1",
+    "mongodb": "^4.2.1",
     "socket.io": "^2.3.0"
   },
   "main": "server.js",
   "scripts": {
-    "start": "set PORT=3030 && nodemon server.js"
+    "start": "set PORT=3040 && nodemon server.js"
   },
   "repository": {
     "type": "git",
