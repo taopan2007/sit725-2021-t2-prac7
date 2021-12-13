@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://taopan2021:tp1234567@taocluster.lvqyr.mongodb.net/project-tao?retryWrites=true&w=majority";
 
-const client = new MongoClient(
+const mongoClient = new MongoClient(
     uri,
     {
         useNewUrlParser: true,
@@ -9,8 +9,19 @@ const client = new MongoClient(
     }
 );
 
-let dbConnection;
+//const dbConnection;
 
+mongoClient.connect((err, db) => {
+    if(!err) {
+        console.log('--> db connected')
+    } else {
+        console.log('--> [db error]: ', err)
+    }
+})
+
+module.exports.mongoClient = mongoClient
+
+/* 
 module.exports = {
     connectToDatabase: (callback) => {
         client.connect((err, db) => {
@@ -19,7 +30,6 @@ module.exports = {
             }
         })
 
-        //dbConnection = db.db('project-tao')
         dbConnection = client.db('project-tao')
         console.log('=> connected to mongodb atlas')
 
@@ -29,7 +39,7 @@ module.exports = {
     getDB: () => {
         return dbConnection
     }
-}
+} */
 
 /* client.connect(err => {
     const collection = client.db("test").collection("devices");

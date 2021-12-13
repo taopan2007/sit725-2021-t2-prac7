@@ -191,7 +191,7 @@ const createBookingModal = (res) => {
         }
 
         const setting = {
-            "url": "/bookReq",
+            "url": "/api/bookReq",
             "type": "POST",
             "timeout": 500,
             "headers": {

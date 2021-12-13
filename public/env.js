@@ -11,7 +11,7 @@ socket.on('number', (msg) => {
 $(document).ready(function(){
   console.log('Ready')
 
-  $.get('/init', (result) => {
+  $.get('/api/init', (result) => {
     $('#hero-area').append(createHero(result[0].heroContent))
     $('#intro-area').append(createIntro(result[0].introContent))
     for (let item of result[0].frameSlideContent) {
