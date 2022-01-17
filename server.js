@@ -1,6 +1,7 @@
 const { response } = require("express");
 //const cors = require('cors')
 let express = require("express");
+const { CLOSING } = require("ws");
 let dbObj = require("./dbConnection")
 let projectsRoute = require('./routes')
 
@@ -17,10 +18,12 @@ app.use('/api', projectsRoute)
 
 //socket
 io.on('connection', (socket) => {
-  console.log('=> a user connected');
+  let randomN = parseInt(Math.random() * 10)
+  console.log(`=> a user connected: ${randomN}`);
   socket.on('disconnect', () => {
     console.log('=> user disconnected');
   });
+  socket.emit("newConnection", `a new page opened - ${randomN}`)
 });
 
 http.listen(port,()=>{

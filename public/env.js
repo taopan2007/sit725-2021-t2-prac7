@@ -3,15 +3,18 @@
 
 let socket = io();
 
-socket.on('number', (msg) => {
-    console.log('Random number: ' + msg);
+socket.on('newConnection', (msg) => {
+    console.log('Tao Server msg: ' + msg);
 })
 
 // main
 $(document).ready(function(){
   console.log('Ready')
 
-  $.get('/api/init', (result) => {
+  $.get('/api/init', (res) => {
+    if(res.statusCode != 200)
+      return null
+    let result = res.result
     $('#hero-area').append(createHero(result[0].heroContent))
     $('#intro-area').append(createIntro(result[0].introContent))
     for (let item of result[0].frameSlideContent) {
