@@ -9,6 +9,7 @@ router.post("/bookReq", (req, res) => {
 
 router.get("/bookList", (req, res) => {
     console.log('----')
+    Controller.book.getBookListContent(res)
 })
 
 router.get("/init", (req, res) => {

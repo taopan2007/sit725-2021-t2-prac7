@@ -36,7 +36,7 @@ const getBookingList = (res) => {
         if(err) {
             throw err
         }
-        res.send(result)
+        res.send({result, statusCode: 200})
     })
 }
 

@@ -1,8 +1,6 @@
-const { response } = require("express");
-//const cors = require('cors')
 let express = require("express");
 const { CLOSING } = require("ws");
-let dbObj = require("./dbConnection")
+
 let projectsRoute = require('./routes')
 
 let app = express();
@@ -14,7 +12,10 @@ var port = process.env.PORT || 8080;
 app.use(express.static(__dirname + '/public'));
 app.use(express.json())
 app.use('/api', projectsRoute)
-//app.use(cors())
+
+app.get('/bookList', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/bookList'))
+})
 
 //socket
 io.on('connection', (socket) => {

@@ -26,7 +26,7 @@ $(document).ready(function(){
     createAmenitiesContent(result[0].amenitiesContent)
 
     //nav
-    $('#nav-bar').load('components/navbar.html', () => {
+    $('#nav-bar').load('./components/navbar.html', () => {
       createBookingModal(result[1].bookModalContent);
       //$('.sidenav').sidenav()
       $('.tabs').tabs()
@@ -34,6 +34,9 @@ $(document).ready(function(){
       $('.scrollspy').scrollSpy();
       $('.modal').modal();
       $('select').formSelect();
+      $('nav #bookBtn').show();
     })
+
+    $('footer').load('./components/footer.html', () => {})
   }) 
 })

@@ -185,6 +185,7 @@ const createBookingModal = (res) => {
         const data = {
             firstName: $('#first_name').val(),
             lastName: $('#last_name').val(),
+            phone: $('#phone').val(),
             email: $('#email').val(),
             option: $('#room_options option:selected').val()
             //option: $('#room_options').formSelect('getSelectedValues')
@@ -204,4 +205,27 @@ const createBookingModal = (res) => {
         //$.post('/bookReq', JSON.stringify(data))
         clearInput()
     })
+}
+
+const createBookList = (list) => {
+    if(list.length <= 0) {
+        $('#application_area').append(`<p>No booking application yet.</p>`)
+    }
+    else {
+        list.map(item => {
+            let t = `
+                <div class="col s12 m4">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">${item.firstName} ${item.lastName}</span>
+                            <p>Booking Type: ${item.option}</p>
+                            <p>Email: ${item.email ? item.email : "no email"}</p>
+                            <p>Phone: ${item.phone ? item.phone : "no phone"}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+            $('#application_area').append(`${t}`)
+        })
+    }
 }
